@@ -37,6 +37,13 @@ jobs:
       - name: Build examples
         run: cmake --build build
 
+      - name: Create index.html
+        run: |
+          touch index.html
+          echo '<!doctype html><html lang=en><head><meta charset=utf-8><title>PGE3 Examples</title></head><body><h1>PGE3 Examples</h1><ul>' >> index.html
+          ls ./build/examples/*.html | xargs printf '<li><a href=\"%s\">%s</a></li>' >> index.html
+          echo '</ul></body></html>' >> index.html
+
       - name: Setup GitHub Pages
         if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v4
